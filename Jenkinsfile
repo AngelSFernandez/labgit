@@ -17,8 +17,8 @@ pipeline {
         stage('Unit test') {
             steps {
                 script {
-                    pysh 'pip3 install -r requirements.txt'
-                    pysh 'pip install -e .'
+                    //pysh 'pip3 install -r requirements.txt'
+                    //pysh 'pip install -e .'
                     sh 'python3 test_all.py'
                 }
             }

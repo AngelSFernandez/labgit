@@ -21,6 +21,19 @@ pipeline {
                 sh 'python3 test_all.py'
             }
         }
-            
+        
+        stage('Secret') {
+            script {
+                echo "---BEGIN---"
+                env.giturl = sh(returnStdout: true, script: 'git config --get remote.origin.url').trim()
+                try {
+                    sh("trufflehog --json --regex ${env.giturl}")
+                } catch(err) {
+                    echo "Caught: ${err}"
+                    currentBuild.result="SUCCESS"
+                } 
+                echo "---END---"
+            }
+        }    
     }
 }
